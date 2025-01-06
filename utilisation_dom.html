@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulation du DOM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1 id="titre-principal">Bienvenue sur la page DOM</h1>
+<p class="description">Ceci est un paragraphe que nous allons modifier avec JavaScript.</p>
+<ul id="liste">
+    <li>Élément 1</li>
+    <li>Élément 2</li>
+    <li>Élément 3</li>
+</ul>
+<button id="ajouter-bouton">Ajouter un élément</button>
+<button id="changer-style">Changer le style</button>
+
+<script>
+    // --- SELECTIONNER DES ÉLÉMENTS ---
+    const titre = document.getElementById("titre-principal"); // Sélection par ID
+    const paragraphe = document.querySelector(".description"); // Sélection par classe
+    const liste = document.getElementById("liste"); // Sélection par ID
+    const boutons = document.querySelectorAll("button"); // Sélection de tous les boutons
+
+    console.log("Titre principal :", titre.textContent); // Affiche le contenu du titre
+    console.log("Nombre de boutons :", boutons.length); // Affiche le nombre de boutons
+
+    // --- MODIFIER LE CONTENU ---
+    titre.textContent = "Manipulation du DOM avec JavaScript";
+    paragraphe.innerHTML = "Le contenu de ce <strong>paragraphe</strong> a été modifié.";
+
+    // --- AJOUTER DES ÉLÉMENTS ---
+    const boutonAjouter = document.getElementById("ajouter-bouton");
+    boutonAjouter.addEventListener("click", () => {
+        const nouvelElement = document.createElement("li"); // Crée un nouvel élément <li>
+        nouvelElement.textContent = `Élément ${liste.children.length + 1}`;
+        liste.appendChild(nouvelElement); // Ajoute l'élément à la liste
+    });
+
+    // --- MODIFIER LE STYLE ---
+    const boutonStyle = document.getElementById("changer-style");
+    boutonStyle.addEventListener("click", () => {
+        titre.classList.toggle("highlight"); // Ajoute ou enlève la classe "highlight"
+    });
+
+    // --- SUPPRIMER DES ÉLÉMENTS ---
+    liste.addEventListener("dblclick", (event) => {
+        if (event.target.tagName === "LI") {
+            liste.removeChild(event.target); // Supprime l'élément cliqué
+        }
+    });
+
+    // --- NAVIGUER DANS LE DOM ---
+    console.log("Parent de la liste :", liste.parentElement.tagName); // Affiche "BODY"
+    console.log("Premier enfant de la liste :", liste.firstElementChild.textContent); // Affiche "Élément 1"
+
+    // --- CHERCHER LES ATTRIBUTS ---
+    const boutonId = boutonAjouter.getAttribute("id"); // Récupère l'ID
+    console.log("ID du bouton Ajouter :", boutonId);
+
+    boutonAjouter.setAttribute("title", "Cliquez pour ajouter un élément"); // Ajoute un attribut
+    console.log("Attribut ajouté :", boutonAjouter.getAttribute("title"));
+</script>
+</body>
+</html>
